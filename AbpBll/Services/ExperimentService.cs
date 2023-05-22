@@ -26,9 +26,14 @@ namespace AbpBll.Services
             return ConfigureColorDto(colorExperimentData);
         }
 
-        public Task<PriceOptionDto> GetPriceOptionForDeviceAsync(string deviceToken)
+        public async Task<PriceOptionDto> GetPriceOptionForDeviceAsync(string deviceToken)
         {
-            throw new NotImplementedException();
+            Device device = await _unitOfWork.DeviceRepository.GetByTokenWithPriceExperimentAsync(deviceToken)
+                ?? await AddNewDeviceToDbAsync(deviceToken);
+            PriceExperimentData priceExperimentData = device.PriceExperimentData
+                ?? await AddNewPriceOptionExperimentAsync(device.Id);
+
+            return ConfigurePriceDto(priceExperimentData);
         }
 
         private async Task<Device> AddNewDeviceToDbAsync(string deviceToken)
@@ -56,12 +61,33 @@ namespace AbpBll.Services
             return data;
         }
 
+        private async Task<PriceExperimentData> AddNewPriceOptionExperimentAsync(Guid deviceId)
+        {
+            PriceExperimentData data = new()
+            {
+                Price = PriceExperimentOptions.GetExperimentalPrice(),
+                DeviceId = deviceId
+            };
+            await _unitOfWork.PriceExperimentRepository.AddAsync(data);
+
+            return data;
+        }
+
         private static ButtonColorDto ConfigureColorDto(ButtonColorExperimentData data)
         {
             return new()
             {
                 Key = AvailableExperiments.ButtonColor.Name,
                 Value = data.ButtonColor,
+            };
+        }
+
+        private static PriceOptionDto ConfigurePriceDto(PriceExperimentData data)
+        {
+            return new()
+            {
+                Key = AvailableExperiments.PriceOption.Name,
+                Value = data.Price,
             };
         }
     }

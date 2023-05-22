@@ -1,4 +1,6 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using AbpBll.Entities.DTOs;
+using AbpBll.Services.Interfaces;
+using Microsoft.AspNetCore.Mvc;
 
 namespace AbpWebApi.Controllers
 {
@@ -6,22 +8,23 @@ namespace AbpWebApi.Controllers
     [Route("[controller]")]
     public class ExperimentController : Controller
     {
-        public ExperimentController()
+        private readonly IExperimentService _experimentService;
+        public ExperimentController(IExperimentService experimentService)
         {
+            _experimentService = experimentService;
         }
 
         [HttpGet("button-color")]
-        [ResponseCache(Duration = 60, Location = ResponseCacheLocation.Any)]
-        public async Task<ActionResult<string>> MakeButtonColorExperiment([FromQuery] string deviceToken)
+        public async Task<ActionResult<ButtonColorDto>> MakeButtonColorExperiment([FromQuery] string deviceToken)
         {
-            return await Task.FromResult("oasd");
+            return await _experimentService.GetButtonColorForDeviceAsync(deviceToken);
         }
 
 
         [HttpGet("price-option")]
-        public async Task<ActionResult<string>> MakePriceOptionExperiment([FromQuery] string deviceToken)
+        public async Task<ActionResult<PriceOptionDto>> MakePriceOptionExperiment([FromQuery] string deviceToken)
         {
-            return await Task.FromResult("oasd");
+            return await _experimentService.GetPriceOptionForDeviceAsync(deviceToken);
         }
     }
 }

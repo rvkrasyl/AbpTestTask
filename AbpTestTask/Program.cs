@@ -1,4 +1,5 @@
 using AbpDal.Data;
+using AbpWebApi.Extensions;
 using AbpWebApi.Meddlewares;
 using Microsoft.EntityFrameworkCore;
 
@@ -9,6 +10,9 @@ builder.Services.AddResponseCaching();
 builder.Services.AddDbContext<AbpExperimentDbContext>(options => options.UseSqlServer(builder.Configuration.GetConnectionString("AbpExperiments")));
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+
+builder.Services.AddRepositoriesAndUoW();
+builder.Services.AddServices();
 
 var app = builder.Build();
 

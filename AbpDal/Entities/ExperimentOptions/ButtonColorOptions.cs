@@ -11,6 +11,6 @@
             };
 
         public static string GetExperimentalColor()
-            => ColorOptions[new Random().Next(0, 2)];
+            => ColorOptions[new Random().Next(0, 3)];
     }
 }
