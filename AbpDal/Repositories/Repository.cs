@@ -18,10 +18,10 @@ namespace AbpDal.Repositories
 
         protected DbSet<TEntity> DbSet { get; }
 
-        public async Task AddAsync(TEntity entity)
+        public virtual async Task AddAsync(TEntity entity)
             => await DbSet.AddAsync(entity);
 
-        public async Task<IEnumerable<TEntity>> GetAll()
+        public virtual async Task<IEnumerable<TEntity>> GetAll()
             => await DbSet.ToListAsync();
     }
 }

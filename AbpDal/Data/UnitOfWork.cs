@@ -15,6 +15,8 @@ namespace AbpDal.Data
 
         public IPriceExperimentRepository PriceExperimentRepository => new PriceExperimentRepository(_context);
 
+        public IDeviceRepository DeviceRepository => new DeviceRepository(_context);
+
         public async Task SaveAsync()
             => await _context.SaveChangesAsync();
     }

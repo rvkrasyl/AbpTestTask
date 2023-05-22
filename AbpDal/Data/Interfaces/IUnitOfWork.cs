@@ -8,6 +8,8 @@ namespace AbpDal.Data.Interfaces
 
         IPriceExperimentRepository PriceExperimentRepository { get; }
 
+        IDeviceRepository DeviceRepository { get; }
+
         Task SaveAsync();
     }
 }

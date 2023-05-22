@@ -11,6 +11,7 @@ namespace AbpWebApi.Controllers
         }
 
         [HttpGet("button-color")]
+        [ResponseCache(Duration = 60, Location = ResponseCacheLocation.Any)]
         public async Task<ActionResult<string>> MakeButtonColorExperiment([FromQuery] string deviceToken)
         {
             return await Task.FromResult("oasd");
@@ -18,7 +19,7 @@ namespace AbpWebApi.Controllers
 
 
         [HttpGet("price-option")]
-        public async Task<ActionResult<string>> MakeOriceOptionExperiment([FromQuery] string deviceToken)
+        public async Task<ActionResult<string>> MakePriceOptionExperiment([FromQuery] string deviceToken)
         {
             return await Task.FromResult("oasd");
         }
