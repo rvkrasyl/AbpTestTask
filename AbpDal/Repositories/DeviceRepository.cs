@@ -24,6 +24,13 @@ namespace AbpDal.Repositories
                 .AsNoTracking()
                 .FirstOrDefaultAsync();
 
+        public async Task<IEnumerable<Device>> GetAllWithExperimentsDataAsync()
+            => await DbSet.FromSqlInterpolated($"SELECT * FROM dbo.Devices")
+                .Include(d => d.PriceExperimentData)
+                .Include(d => d.ButtonColorExperimentData)
+                .AsNoTracking()
+                .ToListAsync();
+
         public override async Task AddAsync(Device entity)
         {
             FormattableString query = $"INSERT INTO dbo.Devices (Id, DeviceToken) VALUES ({entity.Id}, {entity.DeviceToken});";

@@ -7,5 +7,7 @@ namespace AbpDal.Repositories.Interfaces
         Task<Device> GetByTokenWithColorExperimentAsync(string deviceToken);
 
         Task<Device> GetByTokenWithPriceExperimentAsync(string deviceToken);
+
+        Task<IEnumerable<Device>> GetAllWithExperimentsDataAsync();
     }
 }
