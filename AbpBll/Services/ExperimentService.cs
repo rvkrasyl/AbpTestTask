@@ -1,4 +1,5 @@
 ﻿using AbpBll.Entities.DTOs;
+using AbpBll.Exceptions;
 using AbpBll.Services.Interfaces;
 using AbpDal.Data.Interfaces;
 using AbpDal.Entities;
@@ -9,6 +10,8 @@ namespace AbpBll.Services
 {
     public class ExperimentService : IExperimentService
     {
+        private const byte MinDeviceTokenLength = 5;
+        private const string InvalidDeviceTokenExceptionMsg = "Device Token Is invalid";
         private readonly IUnitOfWork _unitOfWork;
 
         public ExperimentService(IUnitOfWork unitOfWork)
@@ -18,6 +21,7 @@ namespace AbpBll.Services
 
         public async Task<ButtonColorDto> GetButtonColorForDeviceAsync(string deviceToken)
         {
+            EnsureTokenIsValid(deviceToken);
             Device device = await _unitOfWork.DeviceRepository.GetByTokenWithColorExperimentAsync(deviceToken)
                 ?? await AddNewDeviceToDbAsync(deviceToken);
             ButtonColorExperimentData colorExperimentData = device.ButtonColorExperimentData
@@ -28,12 +32,21 @@ namespace AbpBll.Services
 
         public async Task<PriceOptionDto> GetPriceOptionForDeviceAsync(string deviceToken)
         {
+            EnsureTokenIsValid(deviceToken);
             Device device = await _unitOfWork.DeviceRepository.GetByTokenWithPriceExperimentAsync(deviceToken)
                 ?? await AddNewDeviceToDbAsync(deviceToken);
             PriceExperimentData priceExperimentData = device.PriceExperimentData
                 ?? await AddNewPriceOptionExperimentAsync(device.Id);
 
             return ConfigurePriceDto(priceExperimentData);
+        }
+
+        private static void EnsureTokenIsValid(string deviceToken)
+        {
+            if (string.IsNullOrWhiteSpace(deviceToken) || deviceToken.Length < MinDeviceTokenLength)
+            {
+                throw new UserInputException(InvalidDeviceTokenExceptionMsg);
+            }
         }
 
         private async Task<Device> AddNewDeviceToDbAsync(string deviceToken)

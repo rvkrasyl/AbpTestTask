@@ -1,4 +1,5 @@
-﻿using System.Net;
+﻿using AbpBll.Exceptions;
+using System.Net;
 
 namespace AbpWebApi.Meddlewares
 {
@@ -30,6 +31,7 @@ namespace AbpWebApi.Meddlewares
 
             HttpStatusCode statusCode = exceptionType.Name switch
             {
+                nameof(UserInputException) => HttpStatusCode.BadRequest,
                 _ => HttpStatusCode.InternalServerError,
             };
 
