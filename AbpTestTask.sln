@@ -1,0 +1,37 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.1.32407.343
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AbpWebApi", "AbpTestTask\AbpWebApi.csproj", "{797F026D-54D1-453D-8654-21C47697841B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AbpBll", "AbpBll\AbpBll.csproj", "{76E335ED-2CDC-43F3-8213-6273D15B2578}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AbpDal", "AbpDal\AbpDal.csproj", "{24AC33DC-EE57-426A-84F1-B5B36D1803BE}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{797F026D-54D1-453D-8654-21C47697841B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{797F026D-54D1-453D-8654-21C47697841B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{797F026D-54D1-453D-8654-21C47697841B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{797F026D-54D1-453D-8654-21C47697841B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{76E335ED-2CDC-43F3-8213-6273D15B2578}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{76E335ED-2CDC-43F3-8213-6273D15B2578}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{76E335ED-2CDC-43F3-8213-6273D15B2578}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{76E335ED-2CDC-43F3-8213-6273D15B2578}.Release|Any CPU.Build.0 = Release|Any CPU
+		{24AC33DC-EE57-426A-84F1-B5B36D1803BE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{24AC33DC-EE57-426A-84F1-B5B36D1803BE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{24AC33DC-EE57-426A-84F1-B5B36D1803BE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{24AC33DC-EE57-426A-84F1-B5B36D1803BE}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {812CEC10-1A17-4BE7-A267-AE437EE3AD69}
+	EndGlobalSection
+EndGlobal
