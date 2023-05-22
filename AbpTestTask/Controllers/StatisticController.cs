@@ -1,6 +1,4 @@
-﻿using AbpBll.Entities.DTOs;
-using AbpBll.Entities.Models;
-using AbpBll.Services;
+﻿using AbpBll.Entities.Models;
 using AbpBll.Services.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 
@@ -13,14 +11,10 @@ namespace AbpWebApi.Controllers
         private readonly IStatisticService _statisticService;
 
         public StatisticController(IStatisticService statisticService)
-        {
-            _statisticService = statisticService;
-        }
+            => _statisticService = statisticService;
 
         [HttpGet]
         public async Task<IEnumerable<ExperimentDetails>> GetExperimentsStatistic()
-        {
-            return await _statisticService.GetStatisticAsync();
-        }
+            => await _statisticService.GetStatisticAsync();
     }
 }

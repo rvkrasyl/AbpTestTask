@@ -10,21 +10,17 @@ namespace AbpWebApi.Controllers
     {
         private readonly IExperimentService _experimentService;
         public ExperimentController(IExperimentService experimentService)
-        {
-            _experimentService = experimentService;
-        }
+            => _experimentService = experimentService;
 
         [HttpGet("button-color")]
+        [ResponseCache(Duration = 60, Location = ResponseCacheLocation.Any)]
         public async Task<ActionResult<ButtonColorDto>> MakeButtonColorExperiment([FromQuery] string deviceToken)
-        {
-            return await _experimentService.GetButtonColorForDeviceAsync(deviceToken);
-        }
+            => await _experimentService.GetButtonColorForDeviceAsync(deviceToken);
 
 
         [HttpGet("price-option")]
+        [ResponseCache(Duration = 60, Location = ResponseCacheLocation.Any)]
         public async Task<ActionResult<PriceOptionDto>> MakePriceOptionExperiment([FromQuery] string deviceToken)
-        {
-            return await _experimentService.GetPriceOptionForDeviceAsync(deviceToken);
-        }
+            => await _experimentService.GetPriceOptionForDeviceAsync(deviceToken);
     }
 }
