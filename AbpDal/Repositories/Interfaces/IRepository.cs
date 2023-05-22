@@ -6,7 +6,5 @@ namespace AbpDal.Repositories.Interfaces
         where TEntity : EntityWithId
     {
         Task AddAsync(TEntity entity);
-
-        Task<IEnumerable<TEntity>> GetAll();
     }
 }

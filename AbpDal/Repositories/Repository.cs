@@ -20,8 +20,5 @@ namespace AbpDal.Repositories
 
         public virtual async Task AddAsync(TEntity entity)
             => await DbSet.AddAsync(entity);
-
-        public virtual async Task<IEnumerable<TEntity>> GetAll()
-            => await DbSet.ToListAsync();
     }
 }
