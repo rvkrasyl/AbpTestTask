@@ -1,9 +1,7 @@
-﻿using AbpDal.Data;
-using AbpDal.Entities;
-using AbpDal.Repositories;
-using AutoBogus;
-using Microsoft.EntityFrameworkCore;
-using MockQueryable.Moq;
+﻿using AbpBll.Services;
+using AbpDal.Data.Interfaces;
+using AbpDal.Repositories.Interfaces;
+using AbpTaskTests.AbpBllTests.EqualityComparers;
 using Moq;
 using Moq.AutoMock;
 using NUnit.Framework;
@@ -16,43 +14,50 @@ namespace AbpTaskTests.AbpBllTests.Services
         private AutoMocker _mocker;
 
         [Test]
-        public async Task GetAllPagedAndFilteredGames_Pagination_Success()
+        public async Task GetStatisticAsync_ReturnsCorrectModel()
         {
             // Arrange
-            var devices = _mocker.Get<List<Device>>();
-            var expectedDevice = devices[1];
-            var repository = _mocker.CreateInstance<DeviceRepository>();
+            var expectedResult = UnitTestHelper.GetExpectedExperimentDetails();
 
             // Act
-            var result = await repository.GetByTokenWithColorExperimentAsync(expectedDevice.DeviceToken);
+            var result = await _mocker.Get<StatisticService>()
+                .GetStatisticAsync();
 
             // Assert
             Assert.Multiple(() =>
             {
-                Assert.That(result, Is.EqualTo(expectedDevice));
+                Assert.That(result, Is.Not.Null);
+                Assert.That(result, Is.EqualTo(expectedResult).Using(new ExperimentDetailsEqualityComparer()));
             });
+        }
 
-            [SetUp]
+        [Test]
+        public async Task GetStatisticAsync_CallsForDevicesWithExperimentData()
+        {
+            // Arrange
+            var repositoryMock = _mocker.GetMock<IDeviceRepository>();
+            var repository = _mocker.Get<IDeviceRepository>();
+
+            // Act
+            await repository.GetAllWithExperimentsDataAsync();
+
+            // Assert
+            repositoryMock.Verify(_ => _.GetAllWithExperimentsDataAsync(), Times.Once);
+        }
+
+        [SetUp]
         public void Setup()
         {
             _mocker = new AutoMocker();
 
-            var optionBuilderMock = new DbContextOptionsBuilder<AbpExperimentDbContext>();
-            var dbContextMock = new Mock<AbpExperimentDbContext>(optionBuilderMock.Options);
+            var uowMock = new Mock<IUnitOfWork>();
+            uowMock.Setup(_ => _.DeviceRepository.GetAllWithExperimentsDataAsync())
+                .ReturnsAsync(UnitTestHelper.GetDevicesWithAllData());
 
-            var devices = new AutoFaker<Device>()
-                .RuleFor(d => d.ButtonColorExperimentData, f => new AutoFaker<ButtonColorExperimentData>())
-                .RuleFor(d => d.PriceExperimentData, f => null)
-                .Generate(5);
+            var statisticService = new StatisticService(uowMock.Object);
 
-            var devicesDbSetMock = devices.AsQueryable().BuildMockDbSet();
-
-            dbContextMock.Setup(dbContext => dbContext.Set<Device>())
-                .Returns(devicesDbSetMock.Object);
-
-            _mocker.Use(devices);
-            _mocker.Use(devicesDbSetMock.Object);
-            _mocker.Use(dbContextMock.Object);
+            _mocker.Use(uowMock);
+            _mocker.Use(statisticService);
         }
     }
 }
