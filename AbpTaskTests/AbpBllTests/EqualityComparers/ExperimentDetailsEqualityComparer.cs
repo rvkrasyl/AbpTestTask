@@ -5,7 +5,7 @@ namespace AbpTaskTests.AbpBllTests.EqualityComparers
 {
     public class ExperimentDetailsEqualityComparer : IEqualityComparer<ExperimentDetails>
     {
-        public bool Equals(ExperimentDetails? x, ExperimentDetails? y)
+        public bool Equals(ExperimentDetails x, ExperimentDetails y)
         {
             return (x == null && y == null)
                 || (x != null && y != null
