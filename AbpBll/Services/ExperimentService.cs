@@ -10,7 +10,7 @@ namespace AbpBll.Services
 {
     public class ExperimentService : IExperimentService
     {
-        private const byte MinDeviceTokenLength = 5;
+        private const byte MinDeviceTokenLength = 6;
         private const string InvalidDeviceTokenExceptionMsg = "Device Token Is invalid";
         private readonly IUnitOfWork _unitOfWork;
 
