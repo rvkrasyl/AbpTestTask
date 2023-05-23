@@ -70,6 +70,7 @@ namespace AbpBll.Services
                 DeviceId = deviceId
             };
             await _unitOfWork.ButtonColorExperimentRepository.AddAsync(data);
+            await _unitOfWork.SaveAsync();
 
             return data;
         }
@@ -82,6 +83,7 @@ namespace AbpBll.Services
                 DeviceId = deviceId
             };
             await _unitOfWork.PriceExperimentRepository.AddAsync(data);
+            await _unitOfWork.SaveAsync();
 
             return data;
         }
